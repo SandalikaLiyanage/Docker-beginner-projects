@@ -10,8 +10,8 @@ services: #containers
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
 #we need to make data persist in here nt in express
-volumes:
-  -mongo-data: /data/db #there is a specific path only which these contaiers or database store all the values 
+  volumes:
+    -mongo-data: /data/db #there is a specific path only which these contaiers or database store all the values 
       #/data/db- this is the default path of mongodb
       # this path is different for other databases like postgres , mysql....
 
