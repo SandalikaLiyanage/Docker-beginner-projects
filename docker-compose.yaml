@@ -1,0 +1,35 @@
+#yaml files-declarative syntax- no much of the code(no loops...)
+version: '3' # latest version of docker
+services: #containers
+#service 1
+  mongodb:     # all requirements for mongodb
+    image: mongo # you can give the version here if you want
+    ports:    # port mappings in array format
+      - "27017:27017"    #port where i connect: port where the app is running
+    environment:    # environment variables
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+#we need to make data persist in here nt in express
+volumes:
+  -mongo-data: /data/db #there is a specific path only which these contaiers or database store all the values 
+      #/data/db- this is the default path of mongodb
+      # this path is different for other databases like postgres , mysql....
+
+#service 2
+  mongo-express:
+    image: mongo-express
+    restart: always    #mongo network error solution-mongodb must run at first then the this. 
+    #because express depends on db. 
+    #so you can say express to restart until you find a connection with the database.
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+volumes:
+  mongo-data: #volume name
+    driver:local #just use local drivers to have data
+
+#by default the containers you write in this compose, share a common network automatically 
+#...service 3(if you want in future)
